@@ -44,8 +44,7 @@ class TensorDataLoader(Generic[_TensorOrTuple]):
 
         Args:
             data (Tensor | Sequence[Tensor]):
-                either a single tensor with all samples stacked along the first dimension,
-                or a tuple of tensors if each sample has more than one tensor.
+                single tensor with all samples stacked along the first dimension, or tuple of tensors that have the same size of the first dimension.
                 For example, if you have 500 samples of shape (32,32) and 500 labels of shape (10),
                 you can pass a tuple of two tensors of the following shapes: `(samples[500, 32, 32], labels[500, 10])`.
             batch_size (int, optional): how many samples per batch to load (default: 1).
@@ -116,7 +115,7 @@ class TensorDataLoader(Generic[_TensorOrTuple]):
 # ----------------------------- light dataloader ----------------------------- #
 class _SupportsLenAndGetitems(Protocol[_T_co]):
     def __len__(self) -> int: ...
-    def __getitems__(self, __k: Any) -> _T_co: ...
+    def __getitems__(self, __k: Any) -> Sequence[_T_co]: ...
 
 _SampleOrTuple = TypeVar("_SampleOrTuple", bound=Union[torch.Tensor, Any, Sequence[torch.Tensor], Sequence[Any]])
 
