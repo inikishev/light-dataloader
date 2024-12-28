@@ -6,7 +6,7 @@ import torch
 @pytest.mark.parametrize("memory_efficient", [True, False])
 @pytest.mark.parametrize("seed", [0, None])
 def test_tensordataloader(batch_size, shuffle, memory_efficient, seed):
-    from lightdl import TensorDataLoader
+    from light_dataloader import TensorDataLoader
 
     data = torch.arange(0, 1000)[:, None,None,None].repeat_interleave(3, 1).repeat_interleave(32, 2).repeat_interleave(32, 3)
     labels = torch.arange(0, 1000)
@@ -37,7 +37,7 @@ def test_tensordataloader(batch_size, shuffle, memory_efficient, seed):
 @pytest.mark.parametrize("shuffle", [True, False])
 @pytest.mark.parametrize("seed", [0, None])
 def test_lightdataloader(batch_size, shuffle, seed):
-    from lightdl import LightDataLoader
+    from light_dataloader import LightDataLoader
 
     data = torch.arange(0, 1000)[:, None,None,None].repeat_interleave(3, 1).repeat_interleave(32, 2).repeat_interleave(32, 3)
     labels = torch.arange(0, 1000)
