@@ -9,6 +9,7 @@ description = "Faster DataLoader for datasets that are fully loaded into memory 
 version = "1.0.0"
 dependencies = [
   "torch",
+  "numpy",
 ]
 requires-python = ">= 3.8"
 readme = "README.md"
