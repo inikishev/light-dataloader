@@ -12,7 +12,7 @@ dependencies = [
   "numpy",
   "more_itertools",
 ]
-requires-python = ">= 3.8"
+requires-python = ">= 3.9"
 readme = "README.md"
 authors = [
   {name = "Ivan Nikishev", email = "nkshv2@gmail.com"},
