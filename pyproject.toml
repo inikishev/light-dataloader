@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lightdl"
+description = ""
+
+version = "1.0.0"
+dependencies = [
+  "torch",
+]
+requires-python = ">= 3.8"
+readme = "README.md"
+authors = [
+  {name = "Ivan Nikishev", email = "nkshv2@gmail.com"},
+]
+license = {file = "LICENSE"}
+keywords = ['dataloader']
+
+
+[project.urls]
+Homepage = "https://github.com/inikishev/lightdl"
+Repository = "https://github.com/inikishev/lightdl"
+Issues = "https://github.com/inikishev/lightdl/isses"
