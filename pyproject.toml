@@ -3,8 +3,8 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lightdl"
-description = ""
+name = "light-dl"
+description = "Faster DataLoader for datasets that are fully loaded into memory as tensors."
 
 version = "1.0.0"
 dependencies = [
