@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "light-dl"
+name = "light_dataloader"
 description = "Faster DataLoader for datasets that are fully loaded into memory as tensors."
 
 version = "1.0.0"
@@ -22,9 +22,9 @@ keywords = ['dataloader']
 
 
 [project.urls]
-Homepage = "https://github.com/inikishev/lightdl"
-Repository = "https://github.com/inikishev/lightdl"
-Issues = "https://github.com/inikishev/lightdl/isses"
+Homepage = "https://github.com/inikishev/light-dataloader"
+Repository = "https://github.com/inikishev/light-dataloader"
+Issues = "https://github.com/inikishev/light-dataloader/isses"
 
 [tool.setuptools]
-py-modules = ["lightdl"]
+py-modules = ["light_dataloader"]
