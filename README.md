@@ -1,7 +1,7 @@
 A faster dataloader for datasets that are fully loaded into memory. Tensorloader is another library that I just found that does the same thing :D https://github.com/zhb2000/tensorloader
 ![image](https://github.com/user-attachments/assets/deabc451-e3fd-4702-81db-c282f9d2695e)
 
-Total time to run 1 epoch with all batch sizes from 8 to 1000 with step 8:
+Total time to run 1 epoch on a preloaded CIFAR10 with all batch sizes from 8 to 1000 with step 8:
 ```
 my laptop:
   pytorch DataLoader with pin_memory       146.8673715000623 sec.
