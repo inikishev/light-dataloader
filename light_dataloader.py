@@ -51,9 +51,10 @@ class TensorDataLoader(Generic[_TensorOrTuple]):
             batch_size (int, optional): how many samples per batch to load (default: 1).
             shuffle (bool, optional): set to True to have the data reshuffled at every epoch (default: False).
             memory_efficient (bool, optional):
-                enables memory efficient, but slightly slower dataloader.
+                enables memory efficient dataloader.
                 During shuffling before each epoch, this uses two times the memory that `data` uses.
-                But when `memory_efficient` is enabled, no additional memory will be used (default: False).
+                But when `memory_efficient` is enabled, no additional memory will be used. 
+                It is slightly slower on my laptop, but much faster on Google Colab (default: False).
             seed (int | torch.Generator | None, optional):
                 seed for shuffling, set to None to let pytorch use a random seed.
                 Can also be a torch.Generator, but make sure it is on the same device as `data`. Defaults to None.
