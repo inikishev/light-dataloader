@@ -26,6 +26,21 @@ class _SupportsLenAndGetitem(Protocol[_T_co]):
     def __len__(self) -> int: ...
     def __getitem__(self, __k: int, /) -> _T_co: ...
 
+def _get_generator(seed: int|None|torch.Generator, device):
+    if isinstance(seed, torch.Generator):
+        generator = seed
+        seed = generator.seed()
+    elif seed is not None:
+        generator = torch.Generator(device).manual_seed(seed)
+    else:
+        generator = None
+        seed = None
+
+    generator_state = None
+    if generator is not None:
+        generator_state = generator.get_state()
+
+    return generator, generator_state, seed
 
 # ----------------------------- tensor dataloader ---------------------------- #
 
@@ -52,7 +67,7 @@ class TensorDataLoader(Generic[_TensorOrTuple]):
             memory_efficient (bool, optional):
                 enables memory efficient dataloader.
                 During shuffling before each epoch, this uses two times the memory that `data` uses.
-                But when `memory_efficient` is enabled, no additional memory will be used. 
+                But when `memory_efficient` is enabled, no additional memory will be used.
                 It is slightly slower on my laptop, but much faster on Google Colab (default: False).
             seed (int | torch.Generator | None, optional):
                 seed for shuffling, set to None to let pytorch use a random seed.
@@ -67,10 +82,12 @@ class TensorDataLoader(Generic[_TensorOrTuple]):
         self._istensor = isinstance(self.data, torch.Tensor)
         self.device = self.data.device if isinstance(self.data, torch.Tensor) else self.data[0].device
 
-        self.seed = seed
-        if isinstance(self.seed, torch.Generator): self.generator = self.seed
-        elif seed is not None: self.generator = torch.Generator(self.device).manual_seed(seed)
-        else: self.generator = None
+        self.generator, self.generator_state, self.seed = _get_generator(seed, self.device)
+
+    def reset_rng(self):
+        if self.generator is None: return
+        assert self.generator_state is not None
+        self.generator.set_state(self.generator_state)
 
     def data_length(self):
         ref = self.data if self._istensor else self.data[0]
@@ -149,9 +166,17 @@ class LightDataLoader(Generic[_SampleOrTuple]):
 
         self._use_getitems = hasattr(self.data, "__getitems__")
 
-        self.seed = seed
-        if isinstance(self.seed, np.random.Generator): self.generator = self.seed
-        else: self.generator = np.random.default_rng(seed)
+        if isinstance(seed, np.random.Generator):
+            self.generator = seed
+            self.seed = None
+
+        else:
+            self.seed = seed
+            self.generator = np.random.default_rng(seed)
+
+
+    def reset_rng(self):
+        if self.seed is not None: self.generator = np.random.default_rng(self.seed)
 
     def __len__(self):
         return math.ceil(len(self.data) / self.batch_size)
